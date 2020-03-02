@@ -13,5 +13,8 @@ module.exports = {
     new HtmlWebpackPlugin({
       title: 'Output Management'
     })
-  ]
+  ],
+  devServer: {
+    contentBase: './dist'
+  }
 };
