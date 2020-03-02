@@ -1,4 +1,4 @@
-import { pokemon } from './components/pokemon';
-import './style.scss';
+import { title } from './components/pokemon';
+import './index.scss';
 
-document.body.appendChild(pokemon());
+document.body.appendChild(title('The next-gen Pokedex'));
