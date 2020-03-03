@@ -1,4 +1,9 @@
-import { title } from './components/pokemon';
+import { app } from './app';
 import './index.scss';
 
-document.body.appendChild(title('The next-gen Pokedex'));
+const elements = app();
+elements.forEach(element => {
+  document.body.appendChild(element);
+});
+
+elements.forEach(document.body.appendChild);

@@ -1,4 +1,5 @@
 import { createElement } from '../lib/dom';
+import './title.scss';
 /*
 export function title() {
   const titleAttributes = {
@@ -11,7 +12,7 @@ export function title() {
 } */
 
 export function title() {
-  const element = document.createElement('h1', {
+  const element = createElement('h1', {
     innerText: 'Pokedex for professionals',
     className: 'title'
   });
