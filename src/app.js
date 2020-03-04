@@ -165,7 +165,7 @@ export function app() {
     className: 'main'
   });
   const titleElement = createTitle('The next-gen Pokedex');
-  const searchElement = createSearch();
+  const searchElement = createSearch(sessionStorage.getItem('searchValue')); //die value bestimmt die Funktion aus der Suche
 
   header.appendChild(titleElement);
   main.appendChild(searchElement);
@@ -176,16 +176,19 @@ export function app() {
   searchElement.addEventListener('input', event => {
     searchResults.innerHTML = ''; //durch diese Eingabe wird das Ergebnis gelöscht
 
-    const searchValue = event.target.value.toLowerCase();
+    const searchValue = event.target.value;
+    const lowerCaseSearchValue = searchValue.toLowerCase(); //spezielle Funktion, die das Suchergebnis auch berücksichtigt, wenn Kleinschreibung benutzt wird
 
     const filteredPokemon = allPokemon.filter(pokemon => {
       if (searchValue.length > 0) {
         //eine Ausgabe erfolgt nur, wenn mindestens 1 Zeichen ausgegeben wird. Ansonsten ist es leer.
-        return pokemon.toLowerCase().includes(searchValue);
+        return pokemon.toLowerCase().startsWith(lowerCaseSearchValue);
       } //hier wird Pokemon gefiltert anhand der Eingabe
     });
     const pokeNames = createPokemonList(filteredPokemon); //neues Element wird hinzugefügt, wird definiert in der pokemons-Funktion
     searchResults.appendChild(pokeNames);
+
+    sessionStorage.setItem('searchValue', searchValue);
 
     console.log(searchValue, filteredPokemon);
   });
