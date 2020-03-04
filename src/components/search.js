@@ -1,7 +1,7 @@
 import { createElement } from '../lib/dom';
 import './search.scss';
 
-export function search() {
+export function createSearch() {
   const element = createElement('input', {
     className: 'searchbar',
     type: 'search',
