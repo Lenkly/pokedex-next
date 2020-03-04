@@ -1,8 +1,7 @@
-import { createElement, appendContent } from './lib/dom';
+import { createElement } from './lib/dom';
 import { createTitle } from './components/title';
-import { createSearchInput } from './components/search';
+import { createSearch } from './components/search';
 import { createPokemonList } from './components/pokemon';
-import Pokeball from './assets/pokeball.svg';
 
 const allPokemon = [
   'Bulbasaur',
@@ -165,31 +164,33 @@ export function app() {
   const main = createElement('main', {
     className: 'main'
   });
-  const title = createTitle('The next-gen Pokedex');
-  const pokeball = createElement('img', {
-    className: 'pokeball',
-    src: Pokeball
-  });
-  const searchInput = createSearchInput();
+  const titleElement = createTitle('The next-gen Pokedex');
+  const searchElement = createSearch(sessionStorage.getItem('searchValue')); //die value bestimmt die Funktion aus der Suche
 
-  let pokemons = createPokemonList(allPokemon);
+  header.appendChild(titleElement);
+  main.appendChild(searchElement);
 
-  appendContent(header, [pokeball, title]);
-  appendContent(main, [searchInput, pokemons]);
+  const searchResults = createElement('div', {}); // neues Element mit Zugriff auf ein Element, das man leeren kann
+  main.appendChild(searchResults);
 
-  searchInput.addEventListener('input', event => {
-    main.removeChild(pokemons);
+  searchElement.addEventListener('input', event => {
+    searchResults.innerHTML = ''; //durch diese Eingabe wird das Ergebnis gelöscht
 
-    const searchValue = event.target.value.toLowerCase();
-    console.log('searchValue: ', searchValue); //immer mal Ausgaben machen, um zu sehen, wo die Fehler auftauchen
-    const filteredPokemon = allPokemon.filter(
-      pokemon => {
-        return pokemon.toLowerCase().startsWith(searchValue);
+    const searchValue = event.target.value;
+    const lowerCaseSearchValue = searchValue.toLowerCase(); //spezielle Funktion, die das Suchergebnis auch berücksichtigt, wenn Kleinschreibung benutzt wird
+
+    const filteredPokemon = allPokemon.filter(pokemon => {
+      if (searchValue.length > 0) {
+        //eine Ausgabe erfolgt nur, wenn mindestens 1 Zeichen ausgegeben wird. Ansonsten ist es leer.
+        return pokemon.toLowerCase().startsWith(lowerCaseSearchValue);
       } //hier wird Pokemon gefiltert anhand der Eingabe
-    );
+    });
+    const pokeNames = createPokemonList(filteredPokemon); //neues Element wird hinzugefügt, wird definiert in der pokemons-Funktion
+    searchResults.appendChild(pokeNames);
 
-    pokemons = createPokemonList(filteredPokemon);
-    appendContent(main, pokemons);
+    sessionStorage.setItem('searchValue', searchValue);
+
+    console.log(searchValue, filteredPokemon);
   });
 
   return [header, main];

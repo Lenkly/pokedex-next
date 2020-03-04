@@ -1,4 +1,4 @@
-import { createElement } from '../lib/dom';
+import { createElement, appendContent } from '../lib/dom';
 
 export function createPokemonList(items) {
   // ich bekomme ein Kind und nenne es wie ich will hier nenne ich mein Kind (Was ein Array mit Strings innen ist) einfach mal eingabeDerGefiltertenPokemonAlsArray
@@ -10,7 +10,7 @@ export function createPokemonList(items) {
       innerText: item,
       className: 'pokemon'
     });
-    container.appendChild(element);
+    appendContent(container, element);
   });
   return container;
 }
