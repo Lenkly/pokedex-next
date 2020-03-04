@@ -176,12 +176,12 @@ export function app() {
   searchElement.addEventListener('input', event => {
     searchResults.innerHTML = ''; //durch diese Eingabe wird das Ergebnis gelöscht
 
-    const searchValue = event.target.value; //neue Variable
+    const searchValue = event.target.value.toLowerCase();
 
     const filteredPokemon = allPokemon.filter(pokemon => {
       if (searchValue.length > 0) {
         //eine Ausgabe erfolgt nur, wenn mindestens 1 Zeichen ausgegeben wird. Ansonsten ist es leer.
-        return pokemon.startsWith(searchValue);
+        return pokemon.toLowerCase().includes(searchValue);
       } //hier wird Pokemon gefiltert anhand der Eingabe
     });
     const pokeNames = createPokemonList(filteredPokemon); //neues Element wird hinzugefügt, wird definiert in der pokemons-Funktion
