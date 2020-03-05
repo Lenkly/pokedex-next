@@ -1,3 +1,4 @@
+import './pokemon.scss';
 import { createElement, appendContent } from '../lib/dom';
 
 export function createPokemonList(items) {
@@ -9,6 +10,12 @@ export function createPokemonList(items) {
     const element = createElement('div', {
       innerText: item,
       className: 'pokemon'
+    });
+    element.addEventListener('click', () => {
+      const favorites = JSON.parse(localStorage.getItem('favorites')) || [];
+      favorites.push(item);
+      const favoriteJSON = JSON.stringify(favorites);
+      localStorage.setItem('favorites', favoriteJSON);
     });
     appendContent(container, element);
   });
