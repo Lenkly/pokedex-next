@@ -2,7 +2,6 @@ import { createElement, appendContent } from './lib/dom';
 import { createTitle } from './components/title';
 import { createSearchInput } from './components/search';
 import { createPokemonList } from './components/pokemon';
-import Pokeball from './assets/pokeball.svg';
 
 const allPokemon = [
   'Bulbasaur',
@@ -166,19 +165,16 @@ export function app() {
     className: 'main'
   });
   const title = createTitle('The next-gen Pokedex');
-  const pokeball = createElement('img', {
-    className: 'pokeball',
-    src: Pokeball
-  });
+
   const searchInput = createSearchInput();
 
-  let pokemons = createPokemonList(allPokemon);
+  let searchResults = createPokemonList(allPokemon);
 
-  appendContent(header, [pokeball, title]);
-  appendContent(main, [searchInput, pokemons]);
+  appendContent(header, title);
+  appendContent(main, [searchInput, searchResults]);
 
   searchInput.addEventListener('input', event => {
-    main.removeChild(pokemons);
+    main.removeChild(searchResults);
 
     const searchValue = event.target.value.toLowerCase();
     console.log('searchValue: ', searchValue); //immer mal Ausgaben machen, um zu sehen, wo die Fehler auftauchen
@@ -188,8 +184,8 @@ export function app() {
       } //hier wird Pokemon gefiltert anhand der Eingabe
     );
 
-    pokemons = createPokemonList(filteredPokemon);
-    appendContent(main, pokemons);
+    searchResults = createPokemonList(filteredPokemon);
+    appendContent(main, searchResults);
   });
 
   return [header, main];

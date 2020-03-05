@@ -1,7 +1,8 @@
-import { createElement } from './lib/dom';
+/* import { createElement } from './lib/dom';
 import { createTitle } from './components/title';
 import { createSearch } from './components/search';
 import { createPokemonList } from './components/pokemon';
+import Pokeball from './assets/pokeball.svg';
 
 const allPokemon = [
   'Bulbasaur',
@@ -165,6 +166,10 @@ export function app() {
     className: 'main'
   });
   const titleElement = createTitle('The next-gen Pokedex');
+  const pokeball = createElement('img', {
+    className: 'pokeball',
+    src: Pokeball
+  });
   const searchElement = createSearch(sessionStorage.getItem('searchValue')); //die value bestimmt die Funktion aus der Suche
 
   header.appendChild(titleElement);

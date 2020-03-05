@@ -6,11 +6,17 @@
   text-transform: uppercase;
   text-align: center;
   margin: 4px;
-  border: 1px solid;
+  border: none;
   padding: 4px;
   border-radius: 0.25rem;
-  background: whitesmoke;
+  background-color: whitesmoke;
+}
+.pokemon:active {
+  background-color: yellowgreen;
 }
 .pokemons {
   display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin: 10px;
 }
