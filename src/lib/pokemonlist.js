@@ -721,8 +721,14 @@
   'Hoopa',
   'Volcanion'
 ]; */
+function waitFor(time) {
+  return new Promise(resolve => {
+    setTimeout(resolve, time);
+  });
+}
 
 async function getPokemons() {
+  await waitFor(2740); //verzögert die Anzeige um 4 Sekunden
   const response = await fetch('https://pokeapi.co/api/v2/pokemon?limit=806');
   const results = await response.json();
   const pokemons = results.results;

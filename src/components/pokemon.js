@@ -14,6 +14,7 @@ export function createPokemonList(pokis) {
       pokis.onSearchResultClick(item);
     });
     appendContent(container, element);
+    console.log('halts maul', element);
   });
   return container;
 }

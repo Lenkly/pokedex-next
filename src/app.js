@@ -4,6 +4,7 @@ import { createSearchInput } from './components/search';
 import { createPokemonList } from './components/pokemon';
 import { createFavorites } from './components/favorites';
 import { filterPokemons } from './lib/pokemonlist';
+import pokeball from './assets/pokeballAnimated.gif';
 
 function refreshLocalStorage(item) {
   let favorites = JSON.parse(localStorage.getItem('favorites')) || []; // localStorage kann entweder ein Array sein oder ein String
@@ -30,7 +31,6 @@ export function app() {
     className: 'main'
   });
   const title = createTitle('Pokedex for Professionals');
-
   const searchInput = createSearchInput({
     value: sessionStorage.getItem('searchValue')
   });
@@ -50,18 +50,23 @@ export function app() {
     appendContent(favoritesContainer, favorites);
   }
   let searchResults = null;
-  function setSearchResults() {
-    const filteredPokemons = filterPokemons(searchInput.value);
+  async function setSearchResults() {
+    const loading = createElement('img', {
+      src: pokeball
+    });
+    appendContent(main, loading);
+    const filteredPokemons = await filterPokemons(searchInput.value);
     searchResults = createPokemonList({
       items: filteredPokemons,
       onSearchResultClick: handleSearchResultClick
     });
     appendContent(main, searchResults);
+    main.removeChild(loading);
   }
   setSearchResults();
 
   appendContent(header, title);
-  appendContent(main, [searchInput, searchResults]);
+  appendContent(main, [searchInput]);
 
   searchInput.addEventListener('input', event => {
     main.removeChild(searchResults);
